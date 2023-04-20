@@ -1,0 +1,24 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:../dev.db"
+}
+
+model MachineMotion {
+  id     Int     @id @default(autoincrement())
+  name   String  @default("MachineMotion")
+  drives Drive[]
+}
+
+model Drive {
+  id              Int            @id @default(autoincrement())
+  motor_size      String
+  MachineMotion   MachineMotion? @relation(fields: [machineMotionId], references: [id])
+  machineMotionId Int?
+}
